@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>首字母检索</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f7f7f7;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+    }
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      width: 80%;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    p {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #333;
+    }
+    .error {
+      color: #e74c3c;
+    }
+  </style>
+  <script>
+    async function searchByInitial() {
+      const initial = document.getElementById('initial').value.trim();
+      const result = document.getElementById('result');
+
+      if (!initial) {
+        result.innerHTML = "<span class='error'>请输入首字母！</span>";
+        return;
+      }
+
+      try {
+        // 读取文件
+        const response = await fetch('name.txt');
+        if (!response.ok) {
+          result.innerHTML = "<span class='error'>无法加载数据文件，请稍后重试。</span>";
+          return;
+        }
+
+        const data = await response.text();
+        const lines = data.split('\n');
+        let found = false;
+
+        // 遍历每一行数据
+        for (const line of lines) {
+          const [key, name, info] = line.split(':');
+          if (key === initial) {
+            const [currentClass, admissionId, previousClass] = info.split(',');
+            result.innerHTML = `${name}，现班级${currentClass}，录取通知书号${admissionId}，原班级${previousClass}`;
+            found = true;
+            break;
+          }
+        }
+
+        if (!found) {
+          result.innerHTML = "<span class='error'>未找到匹配的结果。</span>";
+        }
+      } catch (error) {
+        result.innerHTML = "<span class='error'>发生错误，请稍后重试。</span>";
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>首字母检索</h1>
+    <p>请输入首字母：</p>
+    <input type="text" id="initial" placeholder="例如：sj">
+    <br>
+    <button onclick="searchByInitial()">检索</button>
+    <p id="result"></p>
+  </div>
+</body>
+</html>
