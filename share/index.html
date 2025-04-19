@@ -1,1 +1,87 @@
-111
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>链接跳转</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding: 50px;
+      background-color: #f7f7f7;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: inline-block;
+    }
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      width: 80%;
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .message {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #e74c3c;
+    }
+  </style>
+  <script>
+    async function redirect() {
+      const linkCode = document.getElementById('link-code').value.trim();
+      const message = document.getElementById('message');
+      
+      if (!linkCode) {
+        message.textContent = "请输入链接码！";
+        return;
+      }
+
+      try {
+        // Fetch the data file
+        const response = await fetch('links.json');
+        if (!response.ok) {
+          message.textContent = "链接文件加载失败，请稍后重试。";
+          return;
+        }
+
+        const links = await response.json();
+        if (links[linkCode]) {
+          // Redirect if the link code exists
+          window.location.href = links[linkCode];
+        } else {
+          // Show message if the link code doesn't exist
+          message.textContent = "不要着急，请等待链接被设置";
+        }
+      } catch (error) {
+        message.textContent = "发生错误，请稍后重试。";
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>链接跳转</h1>
+    <p>请输入跳转码：</p>
+    <input type="text" id="link-code" placeholder="输入跳转码">
+    <br>
+    <button onclick="redirect()">跳转</button>
+    <p class="message" id="message"></p>
+  </div>
+</body>
+</html>
