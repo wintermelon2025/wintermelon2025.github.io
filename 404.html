@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>404 Not Found</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background: #f2f2f2;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      color: #333;
+      text-align: center;
+      padding: 50px;
+    }
+    .container {
+      background: #fff;
+      border-radius: 10px;
+      margin: auto;
+      padding: 30px;
+      max-width: 600px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 48px;
+      margin-bottom: 10px;
+      color: #e74c3c;
+    }
+    p {
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    .footer {
+      margin-top: 20px;
+      font-size: 14px;
+      color: #999;
+    }
+    .error-path {
+      color: #3498db;
+      font-weight: bold;
+    }
+  </style>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // 获取错误的路径
+      var errorPath = window.location.pathname;
+      // 显示错误路径
+      var errorPathElement = document.getElementById('error-path');
+      if (errorPathElement) {
+        errorPathElement.textContent = errorPath;
+      }
+      // 5秒后跳转到主页面
+      setTimeout(function() {
+        window.location.href = "https://wintermelon2025.github.io";
+      }, 5000);
+    });
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>404 Not Found</h1>
+    <p>你访问了错误的路径：<span id="error-path" class="error-path"></span></p>
+    <p>页面将在 5 秒后跳转到 <a href="https://wintermelon2025.github.io">主页面</a>。</p>
+  </div>
+  <div class="footer">© 2025 wintermelon2025</div>
+</body>
+</html>
