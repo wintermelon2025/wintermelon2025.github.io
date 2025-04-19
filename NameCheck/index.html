@@ -36,13 +36,22 @@
     button:hover {
       background-color: #45a049;
     }
-    p {
-      margin-top: 20px;
-      font-size: 16px;
-      color: #333;
-    }
     .error {
       color: #e74c3c;
+      margin-top: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
     }
   </style>
   <script>
@@ -56,7 +65,6 @@
       }
 
       try {
-        // 读取文件
         const response = await fetch('name.txt');
         if (!response.ok) {
           result.innerHTML = "<span class='error'>无法加载数据文件，请稍后重试。</span>";
@@ -65,21 +73,42 @@
 
         const data = await response.text();
         const lines = data.split('\n');
-        let found = false;
+        let results = [];
 
-        // 遍历每一行数据
         for (const line of lines) {
-          const [key, name, info] = line.split(':');
-          if (key === initial) {
-            const [currentClass, admissionId, previousClass] = info.split(',');
-            result.innerHTML = `${name}，现班级${currentClass}，录取通知书号${admissionId}，原班级${previousClass}`;
-            found = true;
-            break;
+          const parts = line.split(':');
+          if (parts.length === 3) {
+            const [key, name, info] = parts;
+            if (key === initial) {
+              const [currentClass, admissionId, previousClass] = info.split(',');
+              results.push({
+                name,
+                currentClass,
+                admissionId,
+                previousClass
+              });
+            }
           }
         }
 
-        if (!found) {
+        if (results.length === 0) {
           result.innerHTML = "<span class='error'>未找到匹配的结果。</span>";
+        } else {
+          // 生成表格
+          let tableHtml = '<table>';
+          tableHtml += '<tr><th>姓名</th><th>现班级</th><th>录取通知书号</th><th>原班级</th></tr>';
+          results.forEach(item => {
+            tableHtml += `
+              <tr>
+                <td>${item.name}</td>
+                <td>${item.currentClass}</td>
+                <td>${item.admissionId}</td>
+                <td>${item.previousClass}</td>
+              </tr>
+            `;
+          });
+          tableHtml += '</table>';
+          result.innerHTML = tableHtml;
         }
       } catch (error) {
         result.innerHTML = "<span class='error'>发生错误，请稍后重试。</span>";
@@ -94,7 +123,7 @@
     <input type="text" id="initial" placeholder="例如：sj">
     <br>
     <button onclick="searchByInitial()">检索</button>
-    <p id="result"></p>
+    <div id="result"></div> <!-- 将p改为div以容纳表格 -->
   </div>
 </body>
 </html>
