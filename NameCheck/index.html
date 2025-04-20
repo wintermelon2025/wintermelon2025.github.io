@@ -53,6 +53,20 @@
     th {
       background-color: #f2f2f2;
     }
+    /* 新增样式：底部链接 */
+    .footer-links {
+      margin-top: 30px;
+      font-size: 12px;
+      color: #888;
+    }
+    .footer-links a {
+      text-decoration: none;
+      color: #888;
+      margin: 0 10px;
+    }
+    .footer-links a:hover {
+      color: #555;
+    }
   </style>
   <script>
     async function searchByInitial() {
@@ -124,6 +138,12 @@
     <br>
     <button onclick="searchByInitial()">检索</button>
     <div id="result"></div> <!-- 将p改为div以容纳表格 -->
+  </div>
+
+  <!-- 底部链接 -->
+  <div class="footer-links">
+    <a href="know.html">使用须知</a>
+    <a href="https://example.com/feedback" target="_blank">问题反馈</a>
   </div>
 </body>
 </html>
