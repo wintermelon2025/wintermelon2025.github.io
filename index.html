@@ -1,81 +1,141 @@
-<!DOCTYPE html>  
-<html lang="zh-CN">  
-<head>  
-    <meta charset="UTF-8">  
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
-    <title>主页面</title>  
-    <style>  
-        body, html {  
-            height: 100%;  
-            margin: 0;  
-            display: flex;  
-            align-items: center;  
-            justify-content: center;  
-            background-color: #000;  
-            overflow: hidden;  
-        }  
-  
-        .bg-animation {  
-            position: absolute;  
-            width: 100%;  
-            height: 100%;  
-            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);  
-            background-size: 400% 400%;  
-            animation: gradient 15s ease infinite;  
-        }  
-  
-        @keyframes gradient {  
-            0% {  
-                background-position: 0% 50%;  
-            }  
-            50% {  
-                background-position: 100% 50%;  
-            }  
-            100% {  
-                background-position: 0% 50%;  
-            }  
-        }  
-  
-        .container {  
-            z-index: 1;  
-            color: #fff;  
-            text-align: center;  
-            font-family: Arial, sans-serif;  
-        }  
-  
-        h1 {  
-            font-size: 36px;  
-            margin-bottom: 20px;  
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);  
-        }  
-  
-        .links a {  
-            display: block;  
-            margin-bottom: 10px;  
-            padding: 10px;  
-            background-color: rgba(255, 255, 255, 0.1);  
-            border-radius: 4px;  
-            color: #fff;  
-            text-decoration: none;  
-            transition: all 0.3s ease;  
-        }  
-  
-        .links a:hover {  
-            background-color: rgba(255, 255, 255, 0.3);  
-            transform: scale(1.05);  
-        }  
-    </style>  
-</head>  
-<body>  
-    <div class="bg-animation"></div>  
-    <div class="container">  
-        <h1>欢迎访问</h1>  
-        <div class="links">  
-            <a href="share">链接跳转</a>
-            <a href="https://wj.qq.com/s2/14834773/4d8f/">问题反馈</a>
-            <a href="NameCheck">首字母检索</a>
-            <a href="know.html">使用须知</a>
-        </div>  
-    </div> <!-- 结束 .container -->  
-</body>  
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务迁移通知</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        .link {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .link:hover {
+            color: #2980b9;
+        }
+        .link:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3498db;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .link:hover:after {
+            transform: scaleX(1);
+        }
+        .countdown {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-top: 20px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background-color: #ecf0f1;
+            border-radius: 3px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            width: 0%;
+            transition: width 1s linear;
+            border-radius: 3px;
+        }
+        .decoration {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, rgba(52, 152, 219, 0) 70%);
+        }
+        .decoration-1 {
+            top: -100px;
+            left: -100px;
+        }
+        .decoration-2 {
+            bottom: -100px;
+            right: -100px;
+            background: radial-gradient(circle, rgba(46, 204, 113, 0.1) 0%, rgba(46, 204, 113, 0) 70%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="decoration decoration-1"></div>
+        <div class="decoration decoration-2"></div>
+        <h1>服务迁移通知</h1>
+        <p>尊敬的用户，我们的服务已经迁移到新的位置。</p>
+        <p>请访问我们的新网址：<a href="http://gyj.shensi.cc" class="link" id="new-url">gyj.shensi.cc</a></p>
+        <p>您将在 <span id="countdown">5</span> 秒后自动跳转到新网址。</p>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+    </div>
+
+    <script>
+        // 倒计时和自动跳转功能
+        let timeLeft = 5;
+        const countdownElement = document.getElementById('countdown');
+        const progressElement = document.getElementById('progress');
+        const newUrl = document.getElementById('new-url').getAttribute('href');
+        
+        // 更新倒计时和进度条
+        function updateCountdown() {
+            countdownElement.textContent = timeLeft;
+            const progressWidth = (5 - timeLeft) * 20; // 每秒增加20%
+            progressElement.style.width = progressWidth + '%';
+            
+            if (timeLeft <= 0) {
+                window.location.href = newUrl;
+            } else {
+                timeLeft--;
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        // 启动倒计时
+        updateCountdown();
+    </script>
+</body>
 </html>
