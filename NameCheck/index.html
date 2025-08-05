@@ -1,149 +1,141 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>首字母检索</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-      background-color: #f7f7f7;
-    }
-    .container {
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      display: inline-block;
-    }
-    input[type="text"] {
-      padding: 10px;
-      font-size: 16px;
-      width: 80%;
-      margin-bottom: 20px;
-    }
-    button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    .error {
-      color: #e74c3c;
-      margin-top: 20px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-    /* 新增样式：底部链接 */
-    .footer-links {
-      margin-top: 30px;
-      font-size: 12px;
-      color: #888;
-    }
-    .footer-links a {
-      text-decoration: none;
-      color: #888;
-      margin: 0 10px;
-    }
-    .footer-links a:hover {
-      color: #555;
-    }
-  </style>
-  <script>
-    async function searchByInitial() {
-      const initial = document.getElementById('initial').value.trim();
-      const result = document.getElementById('result');
-
-      if (!initial) {
-        result.innerHTML = "<span class='error'>请输入首字母！</span>";
-        return;
-      }
-
-      try {
-        const response = await fetch('name.txt');
-        if (!response.ok) {
-          result.innerHTML = "<span class='error'>无法加载数据文件，请稍后重试。</span>";
-          return;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>服务迁移通知</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
         }
-
-        const data = await response.text();
-        const lines = data.split('\n');
-        let results = [];
-
-        for (const line of lines) {
-          const parts = line.split(':');
-          if (parts.length === 3) {
-            const [key, name, info] = parts;
-            if (key === initial) {
-              const [currentClass, admissionId, previousClass] = info.split(',');
-              results.push({
-                name,
-                currentClass,
-                admissionId,
-                previousClass
-              });
-            }
-          }
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
         }
-
-        if (results.length === 0) {
-          result.innerHTML = "<span class='error'>未找到匹配的结果。</span>";
-        } else {
-          // 生成表格
-          let tableHtml = '<table>';
-          tableHtml += '<tr><th>姓名</th><th>现班级</th><th>录取通知书号</th><th>原班级</th></tr>';
-          results.forEach(item => {
-            tableHtml += `
-              <tr>
-                <td>${item.name}</td>
-                <td>${item.currentClass}</td>
-                <td>${item.admissionId}</td>
-                <td>${item.previousClass}</td>
-              </tr>
-            `;
-          });
-          tableHtml += '</table>';
-          result.innerHTML = tableHtml;
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 28px;
         }
-      } catch (error) {
-        result.innerHTML = "<span class='error'>发生错误，请稍后重试。</span>";
-      }
-    }
-  </script>
+        p {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        .link {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .link:hover {
+            color: #2980b9;
+        }
+        .link:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #3498db;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .link:hover:after {
+            transform: scaleX(1);
+        }
+        .countdown {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e74c3c;
+            margin-top: 20px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background-color: #ecf0f1;
+            border-radius: 3px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #3498db, #2ecc71);
+            width: 0%;
+            transition: width 1s linear;
+            border-radius: 3px;
+        }
+        .decoration {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(52, 152, 219, 0.1) 0%, rgba(52, 152, 219, 0) 70%);
+        }
+        .decoration-1 {
+            top: -100px;
+            left: -100px;
+        }
+        .decoration-2 {
+            bottom: -100px;
+            right: -100px;
+            background: radial-gradient(circle, rgba(46, 204, 113, 0.1) 0%, rgba(46, 204, 113, 0) 70%);
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <h1>首字母检索</h1>
-    <p>请输入首字母(全部小写！)：</p>
-    <input type="text" id="initial" placeholder="例如：dcl">
-    <br>
-    <button onclick="searchByInitial()">检索</button>
-    <div id="result"></div> <!-- 将p改为div以容纳表格 -->
-  </div>
+    <div class="container">
+        <div class="decoration decoration-1"></div>
+        <div class="decoration decoration-2"></div>
+        <h1>服务迁移通知</h1>
+        <p>尊敬的用户，我们的服务已经迁移到新的位置。</p>
+        <p>请访问我们的新网址：<a href="https://gyj.shensi.cc/school/NameCheck/" class="link" id="new-url">gyj.shensi.cc</a></p>
+        <p>您将在 <span id="countdown">5</span> 秒后自动跳转到新网址。</p>
+        <div class="progress-bar">
+            <div class="progress" id="progress"></div>
+        </div>
+    </div>
 
-  <!-- 底部链接 -->
-  <div class="footer-links">
-    <a href="know.html">使用须知</a>
-    <a href="https://wj.qq.com/s2/21042748/bb9e/" target="_blank">问题反馈</a>
-  </div>
+    <script>
+        // 倒计时和自动跳转功能
+        let timeLeft = 5;
+        const countdownElement = document.getElementById('countdown');
+        const progressElement = document.getElementById('progress');
+        const newUrl = document.getElementById('new-url').getAttribute('href');
+        
+        // 更新倒计时和进度条
+        function updateCountdown() {
+            countdownElement.textContent = timeLeft;
+            const progressWidth = (5 - timeLeft) * 20; // 每秒增加20%
+            progressElement.style.width = progressWidth + '%';
+            
+            if (timeLeft <= 0) {
+                window.location.href = newUrl;
+            } else {
+                timeLeft--;
+                setTimeout(updateCountdown, 1000);
+            }
+        }
+        
+        // 启动倒计时
+        updateCountdown();
+    </script>
 </body>
 </html>
